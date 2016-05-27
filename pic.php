@@ -1,11 +1,26 @@
+<?php
+session_start();
+include_once 'dbconnect.php';
+
+if(!isset($_SESSION['user']))
+{
+ header("Location: index.php");
+}
+$res=mysql_query("SELECT * FROM users WHERE user_id=".$_SESSION['user']);
+$userRow=mysql_fetch_array($res);
+?>
 <!DOCTYPE html>
+<html>
 <head>
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="style.css" />
-<title>FTP upload</title>
+<title>Upload 3 pics - <?php echo $userRow['user_name']; ?></title>
 </head>
 <body>
 <div id="div0">
+	<div id="hello">
+		<p>Hello <?php echo $userRow['user_name']; ?></p>
+	</div>
 	<div id="img">
 		<div id="images">
 			<div id="image1" class="image">
@@ -38,9 +53,7 @@
 		</div>
 	</div>
 	<div id="signout">
-		<form action="index.html">
-			<input type="submit" value="Sign Out" />
-		</form>
+		<a href="logout.php?logout">Sign Out</a>
 	</div>
 </div>
 </body>
